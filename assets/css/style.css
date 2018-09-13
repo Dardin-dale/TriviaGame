@@ -1,0 +1,18 @@
+body {
+    max-width: 960px;
+    margin: 0 auto;
+
+}
+
+
+
+#timer {
+    position: relative;
+    margin: 100 auto;
+}
+
+#qbody {
+    position: relative;
+    margin: 20 auto;
+}
+

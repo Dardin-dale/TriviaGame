@@ -5,17 +5,38 @@ $(document).ready(function () {
     //time indicated the amount of time needed to answer the question in seconds
     //time should be padded with 4 seconds of time to display answer.
     var q1 = {
-        question: "Who let the Dogs out?",
-        answers: ["Jay-Z", "The Baha men", "Smash Mouth", "Shrek"],
+        question: "How many particles are there in a mole?",
+        answers: ["6.626 x 10^34", "6.02 x 10^23", "6.67 x 10^11", "about 5"],
         correct: 1,
-        time: 4 + 6
+        time: 4 + 7
     }
 
     var q2 = {
-        question: "Who farted?",
-        answers: ["Picasso", "Goku", "Freeza", "Shrek"],
-        correct: 1,
+        question: "What's the gravitational force constant?",
+        answers: ["6.626 x 10^-34 N·kg^–2·m^2", "6.02 x 10^-23 N·kg^–2·m^2", "6.68 x 10^-11 m^3·kg^-1·s^-2", "9 m/s^2"],
+        correct: 2,
+        time: 4 + 7
+    }
+
+    var q3 = {
+        question: "Optical Isomers resulting from Chirality (miror images of each other) are also known as?",
+        answers: ["Stereo Isomers", "Diasteriomers", "Enantiomers", "Isosceles"],
+        correct: 2,
         time: 4 + 5
+    }
+
+    var q4 = {
+        question: "What is the maximum number of electrons in a d shell orbital?",
+        answers: ["10", "6", "2", "14"],
+        correct: 0,
+        time: 4 + 5
+    }
+
+    var q4 = {
+        question: "Light emmited from a direct singlet excited state (as opposed to an intersystem crossing) is called?",
+        answers: ["Potato", "Phosphorescence", "Laser", "Fluorescence"],
+        correct: 3,
+        time: 4 + 4
     }
 
     // #######################
@@ -53,13 +74,13 @@ $(document).ready(function () {
 
     //Main game controller 
     var game = {
-        test: [q1,q2],
+        test: [q1, q2, q3, q4],
         numCorrect: 0,
         numWrong: 0,
         noAnswer: 0,
         guess: -1,
         count: 0,
-        answered: true,
+        answered: false,
 
         //runs through test array, alternates between questions and answers
         run: function () {
@@ -78,6 +99,7 @@ $(document).ready(function () {
                 //only draw question once
                 if(draw) {
                     // draw question object
+                    $('#qbody').empty();
                     q2html(q, undefined, "qbody");
                     draw = false;
                 }
@@ -137,17 +159,18 @@ $(document).ready(function () {
         end: function () {
             $('#qbody').empty();
             $('#qbody').html('<h2>Congratulations! Well Done!</h2>' +
-                '<h3>You got : <h3>' +
+                '<h3>Your Results : <h3>' +
                 '<ul> <li>Correct: ' + this.numCorrect + '</li>'+
                 '<li>Incorrect: ' + this.numWrong + '</li>' +
-                '<li>Unanswered: ' + this.noAnswer + '</li> </ul>'
+                '<li>Unanswered: ' + this.noAnswer + '</li> </ul>' +
+                '<button class="btn btn-primary" id="reset">Play Again?</button>'
         );
 
         },
 
         //resets the game state and starts the test over
         reset: function () {
-            $(qBody).empty();
+            $(qbody).empty();
             this.numCorrect = 0;
             this.numWrong = 0;
             this.noAnswer = 0;
@@ -170,6 +193,11 @@ $(document).ready(function () {
         game.guess = $(this).attr('data-index');
         game.answered = true;
         // console.log(game.guess);s
+    });
+
+    //Starts the quiz over again
+    $(document).on('click', '#reset', function () {
+        game.reset();
     });
     
 })
