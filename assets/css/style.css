@@ -1,18 +1,39 @@
 body {
     max-width: 960px;
-    margin: 0 auto;
-
+    background: url('../images/chemistrybkg.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin: auto;
 }
 
+ul{ list-style-type: none; }
 
+.container {
+    margin: 20% auto;
+    max-width: 800px;
+}
+.btn-info {
+    margin: 10px;
+}
 
 #timer {
-    position: relative;
+    text-align: center;
+    text-emphasis: bold;
     margin: 100 auto;
+    background-color: wheat;
+    padding: 10px;
+    border: 2px solid gray;
+    border-bottom: none;
 }
 
 #qbody {
-    position: relative;
-    margin: 20 auto;
+    text-align: center;
+    margin: 100 auto;
+    padding: 10px;
+    background-color: wheat;
+    border: 2px solid gray;
+    border-top: none;
 }
 

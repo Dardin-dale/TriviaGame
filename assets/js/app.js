@@ -22,21 +22,21 @@ $(document).ready(function () {
         question: "Optical Isomers resulting from Chirality (miror images of each other) are also known as?",
         answers: ["Stereo Isomers", "Diasteriomers", "Enantiomers", "Isosceles"],
         correct: 2,
-        time: 4 + 5
+        time: 4 + 6
     }
 
     var q4 = {
         question: "What is the maximum number of electrons in a d shell orbital?",
         answers: ["10", "6", "2", "14"],
         correct: 0,
-        time: 4 + 5
+        time: 4 + 6
     }
 
     var q4 = {
         question: "Light emmited from a direct singlet excited state (as opposed to an intersystem crossing) is called?",
         answers: ["Potato", "Phosphorescence", "Laser", "Fluorescence"],
         correct: 3,
-        time: 4 + 4
+        time: 4 + 6
     }
 
     // #######################
@@ -126,12 +126,15 @@ $(document).ready(function () {
                         if (game.guess == q.correct) {
                             game.numCorrect++;
                             // display correct heading
+                            $('#timer').text('You Guessed Right!')
                         } else if (game.guess == -1){
                             // user got stumped
+                            $('#timer').text('Hmm you forgot to answer..')
                             game.noAnswer++;
                             
                         } else {
                             // wrong answer
+                            $('#timer').text('You Guessed Wrong!')
                             game.numWrong++;
                         }
                     }
@@ -159,10 +162,10 @@ $(document).ready(function () {
         end: function () {
             $('#qbody').empty();
             $('#qbody').html('<h2>Congratulations! Well Done!</h2>' +
-                '<h3>Your Results : <h3>' +
-                '<ul> <li>Correct: ' + this.numCorrect + '</li>'+
-                '<li>Incorrect: ' + this.numWrong + '</li>' +
-                '<li>Unanswered: ' + this.noAnswer + '</li> </ul>' +
+                '<h3>Your Results:<h3>' +
+                '<h3>Correct: ' + this.numCorrect + '</h3>'+
+                '<h3>Incorrect: ' + this.numWrong + '</h3>' +
+                '<h3>Unanswered: ' + this.noAnswer + '</h3>' +
                 '<button class="btn btn-primary" id="reset">Play Again?</button>'
         );
 
