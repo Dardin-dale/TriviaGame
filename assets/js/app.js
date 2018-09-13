@@ -34,7 +34,7 @@ $(document).ready(function () {
         $('#'+ target).append(question);
         // add answer buttons
         for (var i = 0; i<q.answers.length; i++){
-            var ansbtn = $('<button type="button" class="btn btn-info">').text(q.answers[i]);
+            var ansbtn = $('<button type="button" class="btn btn-info option" data-index='+ i +'>').text(q.answers[i]);
             $('#answers').append(ansbtn);
         }
     }
@@ -44,23 +44,26 @@ $(document).ready(function () {
     function a2html(q, cl="answer", target="qbody") {
         var answer = $('<div>');
         answer.addClass(cl);
-        answer.html();
+        answer.html('<h3 id=guess></h3>' +
+            '<h3>The Correct Answer was: ' + q.answers[q.correct] + '</h3>'
+        );
+
+        $('#'+target).append(answer);
     }
 
     //Main game controller 
     var game = {
         test: [q1,q2],
-        running: false,
         numCorrect: 0,
         numWrong: 0,
         noAnswer: 0,
         guess: -1,
         count: 0,
+        answered: true,
 
         //runs through test array, alternates between questions and answers
         run: function () {
             var q = this.test[this.count];
-            console.log(q);
             var qtime = q.time;
             var answered = false;
             var draw = true;
@@ -79,14 +82,12 @@ $(document).ready(function () {
                     draw = false;
                 }
 
-                //check if user has answered the question
-                if (game.guess != -1){
-                    answered = true;
-                }
             //  if time runs out or question is answered
             // display question answer for 4 seconds
                 if (qtime <= 4 || answered) {
+                    // console.log(qtime);
                     if (answered) {
+                        game.answered = false;
                         qtime = 4;
                     }
                     $('#timer').empty();
@@ -99,21 +100,19 @@ $(document).ready(function () {
                     }
 
                     //check if user guessed correctly
-                    if (game.guess == q.correct) {
-                        game.numCorrect++;
-                        // display correct heading
-                    } else if (game.guess == -1){
-                        // user got stumped
-                        game.noAnswer++;
-                        
-                    } else {
-                        // wrong answer
-                        game.numWrong++;
+                    if(qtime == 4){
+                        if (game.guess == q.correct) {
+                            game.numCorrect++;
+                            // display correct heading
+                        } else if (game.guess == -1){
+                            // user got stumped
+                            game.noAnswer++;
+                            
+                        } else {
+                            // wrong answer
+                            game.numWrong++;
+                        }
                     }
-
-                    
-                    
-
 
                     //ends test or asks next question
                     if (game.count == game.test.length - 1 && qtime == 0) {
@@ -136,6 +135,13 @@ $(document).ready(function () {
         //ends test displays stats
         //should clear qbody first
         end: function () {
+            $('#qbody').empty();
+            $('#qbody').html('<h2>Congratulations! Well Done!</h2>' +
+                '<h3>You got : <h3>' +
+                '<ul> <li>Correct: ' + this.numCorrect + '</li>'+
+                '<li>Incorrect: ' + this.numWrong + '</li>' +
+                '<li>Unanswered: ' + this.noAnswer + '</li> </ul>'
+        );
 
         },
 
@@ -158,5 +164,12 @@ $(document).ready(function () {
     // #######################
     // On Click Functions
     // #######################
+
+    //click on one of the answer buttons
+    $(document).on('click', '.option', function () {
+        game.guess = $(this).attr('data-index');
+        game.answered = true;
+        // console.log(game.guess);s
+    });
     
 })
